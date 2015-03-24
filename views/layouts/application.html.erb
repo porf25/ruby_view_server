@@ -14,19 +14,37 @@
       <p>Put things in the header</p>
       <ul>
         <li><%= link_to('BoneTech Solutions', 'http://bonetech.solutions') %></li>
-        <li><%= link_to('Home Page', 'index.html') %></li>
-        <li><%= link_to('Porf Page', 'porf.html') %></li>
+        <li><%= link_to('Home Page', 'index') %></li>
+        <li><%= link_to('Porf Page', 'porf') %></li>
       </ul>
 
     </p>
     <hr />
     <div>
+      <% if @request.query['first_name'] && !@request.query['first_name'].empty? %>
+    <h2>Hello there <%= @request.query['first_name'] %>, you are a <%= @request.query['sex'] %></h2>
+  <% else %>
+    <h2>Enter thy name</h2>
+  <% end %>
+</div>
+    <div>
       <%= yield %>
     </div>
+    <div>
+      <form method='post' action="<%= @request.path %>">
+        First name: <input type="text" name="first_name" placeholder='first name'/><br />
+        <label>Select your Sex</label><br />
+        <input type="radio" name="sex" value="male" checked>Male
+        <br />
+        <input type="radio" name="sex" value="female">Female
+        <br />
+        <input type="submit" value="Submit" />
+    </form>
+  </div>
     <hr />
     <div>
       <h3> I'm a footer</h3>
-      <p>Hey this is the footer, Copyright 2015 Porf!</p>
+      <p>Hey this is the footer, Copyright 2015 Porf! || <%= @request.query.inspect %></p>
     </div>
   </body>
 </html>
